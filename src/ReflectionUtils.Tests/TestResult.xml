@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" total="3" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-03-05" time="00:20:04">
+  <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.4952" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.5.9\bin\net-2.0" machine-name="MEAD-PC" user="Mead" user-domain="Mead-PC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Project" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" executed="True" result="Failure" success="False" time="95.369" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\bin\Debug\ReflectionUtils.Tests.dll" executed="True" result="Failure" success="False" time="95.362" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="ReflectionUtils" executed="True" result="Failure" success="False" time="95.361" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="95.359" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="ReflectionExtensionsTextFixture" executed="True" result="Failure" success="False" time="95.359" asserts="0">
+                    <results>
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_For_Two_Objects_Of_Same_Type_Return_Same_Properties" executed="True" result="Failure" success="False" time="95.318" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected: same as < <Int32 Id>, <System.String Name> >
+  But was:  < <Int32 Id>, <System.String Name> >
+]]></message>
+                          <stack-trace><![CDATA[at ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_For_Two_Objects_Of_Same_Type_Return_Same_Properties() in K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionExtensionsTextFixture.cs:line 31
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_Object_Returns_Object_Properties" executed="True" result="Success" success="True" time="0.000" asserts="2" />
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.ToDynamic_Returns_Object_As_dynamic" executed="True" result="Success" success="True" time="0.000" asserts="3" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
