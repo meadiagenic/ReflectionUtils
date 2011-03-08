@@ -8,51 +8,132 @@ using System.Collections.Specialized;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Collections;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Reflection.Emit;
 
 namespace ReflectionUtils
 {
     public static class ReflectionExtensions
     {
-        private static IDictionary<Type, PropertyInfo[]> _propertyCache = new PopulatingDictionary<Type, PropertyInfo[]>(t => t.GetProperties());
-        public static IEnumerable<PropertyInfo> GetProperties(this object @obj)
+        public static bool IsNullable(this Type type)
         {
-            if (@obj == null) yield break;
-
-            foreach (var item in _propertyCache[@obj.GetType()]) {
-                yield return item;    
-            }
-            
+            return type.IsGenericType && (typeof(Nullable<>) == type.GetGenericTypeDefinition());
         }
 
-        public static IDictionary<string, object> ToDictionary(this object @obj)
+        public static bool IsConcrete(this Type type)
         {
-            return (IDictionary<string, object>)@obj.ToDynamic();
+            return (!type.IsInterface && !type.IsAbstract && !type.IsValueType);
         }
 
-        public static dynamic ToDynamic(this object @obj)
+        public static void ThrowIfNull(this object @obj, string argumentName)
         {
-            var result = new ExpandoObject();
+            if (@obj == null) throw new ArgumentNullException(argumentName);
+        }
 
-            var d = result as IDictionary<string, object>;
-
-            if (@obj.GetType() == typeof(ExpandoObject)) return @obj;
-            if (@obj.GetType() == typeof(NameValueCollection))
+        public static object CreateInstance(this Type type)
+        {
+            if (type == null || type.IsValueType || type.IsAbstract || type == typeof(object) || type == typeof(string))
             {
-                var nv = (NameValueCollection)@obj;
-                nv.Cast<string>()
-                    .Select(key => new KeyValuePair<string, object>(key, nv[key]))
-                    .ToList()
-                    .ForEach(i => d.Add(i));
+                return new ExpandoObject();
             }
-            else
+
+            var targetType = type.ResolveInterfaceType();
+
+            if (targetType.IsInterface)
             {
-                var props = @obj.GetProperties();
-                foreach (var item in props)
+                return new ExpandoObject();
+            }
+
+            //TypeMap typemap = targetType.LoadTypeMap();
+            //if ((typemap == null) || (typemap.Ctor == null) || ((typemap.CtorArgs != null) && (typemap.CtorArgs.Length > 0)))
+            //{
+            //    return new ExpandoObject();
+            //}
+            TypeMap typemap = null;
+            return typemap.Ctor();
+        }
+
+        public static object CreateInstance(this Type type, object args)
+        {
+            var targetType = type.ResolveInterfaceType();
+
+            return null;
+        }
+
+        
+
+        private static GenericInterfaceSwitchCase giSwitchCase = new GenericInterfaceSwitchCase();
+
+        public static Type ResolveGenericTypeDefinition(this Type type)
+        {
+            try
+            {
+                return type.GetGenericTypeDefinition();
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            return type;
+        }
+
+        public static Type ResolveInterfaceType(this Type type)
+        {
+            var targetType = type;
+            if (type.IsInterface)
+            {
+                targetType = giSwitchCase.Eval(targetType);
+            }
+            return targetType;
+        }
+    }
+
+    public class GenericInterfaceSwitchCase : Dictionary<Type, Func<Type, Type>>
+    {
+
+        public Type ConvertToListType(Type genericType)
+        {
+            Type[] genericArgs = genericType.GetGenericArguments();
+            return typeof(List<>).MakeGenericType(genericArgs);
+        }
+
+        public GenericInterfaceSwitchCase()
+        {
+            Add(typeof(IList<>), ConvertToListType);
+            Add(typeof(IEnumerable<>), ConvertToListType);
+            Add(typeof(IQueryable<>), ConvertToListType);
+            Add(typeof(IOrderedQueryable<>), ConvertToListType);
+            Add(typeof(ICollection<>), ConvertToListType);
+            Add(typeof(IDictionary<,>), t =>
+            {
+                Type[] genericArgs = t.GetGenericArguments();
+                if (genericArgs.Length == 2 && genericArgs[0] == typeof(string) && genericArgs[1] == typeof(object))
                 {
-                    d.Add(item.Name, item.GetValue(@obj, null));
+                    return typeof(ExpandoObject);
                 }
+                else
+                {
+                    return typeof(Dictionary<,>).MakeGenericType(genericArgs);
+                }
+            });
+            Add(typeof(IList), t => typeof(object[]));
+            Add(typeof(IEnumerable), t => typeof(object[]));
+            Add(typeof(IQueryable), t => typeof(object[]));
+            Add(typeof(IOrderedQueryable), t => typeof(object[]));
+            Add(typeof(ICollection), t => typeof(object[]));
+            Add(typeof(IDictionary), t => typeof(Dictionary<string, object>));
+            Add(typeof(IDynamicMetaObjectProvider), t => typeof(ExpandoObject));
+        }
+
+        public Type Eval(Type value)
+        {
+            var genericType = value.ResolveGenericTypeDefinition();
+            if (this.ContainsKey(genericType))
+            {
+                return this[genericType](value);
             }
-            return result;
+            return value;
         }
     }
 
@@ -156,5 +237,11 @@ namespace ReflectionUtils
         {
             return GetEnumerator();
         }
+    }
+
+
+    public class TypeMap
+    {
+        public Factory Ctor { get; private set; }
     }
 }

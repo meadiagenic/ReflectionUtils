@@ -1,29 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" total="3" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-03-05" time="00:20:04">
-  <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.4952" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.5.9\bin\net-2.0" machine-name="MEAD-PC" user="Mead" user-domain="Mead-PC" />
+<test-results name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" total="6" errors="0" failures="2" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-03-06" time="01:01:55">
+  <environment nunit-version="2.5.9.10348" clr-version="2.0.50727.4952" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests" machine-name="MEAD-PC" user="Mead" user-domain="Mead-PC" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Project" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" executed="True" result="Failure" success="False" time="95.369" asserts="0">
+  <test-suite type="Project" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionUtils.Tests.nunit" executed="True" result="Failure" success="False" time="1.190" asserts="0">
     <results>
-      <test-suite type="Assembly" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\bin\Debug\ReflectionUtils.Tests.dll" executed="True" result="Failure" success="False" time="95.362" asserts="0">
+      <test-suite type="Assembly" name="K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\bin\Debug\ReflectionUtils.Tests.dll" executed="True" result="Failure" success="False" time="1.179" asserts="0">
         <results>
-          <test-suite type="Namespace" name="ReflectionUtils" executed="True" result="Failure" success="False" time="95.361" asserts="0">
+          <test-suite type="Namespace" name="ReflectionUtils" executed="True" result="Failure" success="False" time="1.179" asserts="0">
             <results>
-              <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="95.359" asserts="0">
+              <test-suite type="Namespace" name="Tests" executed="True" result="Failure" success="False" time="1.175" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="ReflectionExtensionsTextFixture" executed="True" result="Failure" success="False" time="95.359" asserts="0">
+                  <test-suite type="TestFixture" name="ReflectionExtensionsTextFixture" executed="True" result="Failure" success="False" time="1.172" asserts="0">
                     <results>
-                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_For_Two_Objects_Of_Same_Type_Return_Same_Properties" executed="True" result="Failure" success="False" time="95.318" asserts="1">
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.Dup_Returns_Copy_Of_Object" executed="True" result="Failure" success="False" time="0.086" asserts="1">
                         <failure>
-                          <message><![CDATA[  Expected: same as < <Int32 Id>, <System.String Name> >
-  But was:  < <Int32 Id>, <System.String Name> >
+                          <message><![CDATA[  Expected: not null
+  But was:  null
 ]]></message>
-                          <stack-trace><![CDATA[at ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_For_Two_Objects_Of_Same_Type_Return_Same_Properties() in K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionExtensionsTextFixture.cs:line 31
+                          <stack-trace><![CDATA[at ReflectionUtils.Tests.ReflectionExtensionsTextFixture.Dup_Returns_Copy_Of_Object() in K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionExtensionsTextFixture.cs:line 19
 ]]></stack-trace>
                         </failure>
                       </test-case>
-                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_Object_Returns_Object_Properties" executed="True" result="Success" success="True" time="0.000" asserts="2" />
-                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.ToDynamic_Returns_Object_As_dynamic" executed="True" result="Success" success="True" time="0.000" asserts="3" />
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.Dup_With_Serializable_Returns_Copy_Of_Object" executed="True" result="Success" success="True" time="0.636" asserts="4" />
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.GetProperties_Object_Returns_Object_Properties" executed="True" result="Success" success="True" time="0.004" asserts="2" />
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.IsA_Returns_With_OpenGeneric_Interfaces" executed="True" result="Failure" success="False" time="0.001" asserts="1">
+                        <failure>
+                          <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                          <stack-trace><![CDATA[at ReflectionUtils.Tests.ReflectionExtensionsTextFixture.IsA_Returns_With_OpenGeneric_Interfaces() in K:\Projects\ReflectionUtils\src\ReflectionUtils.Tests\ReflectionExtensionsTextFixture.cs:line 55
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.Merge_With_Null_Returns_Original_Object" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                      <test-case name="ReflectionUtils.Tests.ReflectionExtensionsTextFixture.ToDynamic_Returns_Object_As_dynamic" executed="True" result="Success" success="True" time="0.402" asserts="3" />
                     </results>
                   </test-suite>
                 </results>
